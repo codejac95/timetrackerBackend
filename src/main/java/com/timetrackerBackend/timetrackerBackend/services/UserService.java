@@ -34,5 +34,5 @@ public class UserService {
         Query query = Query.query(Criteria.where("id").is(id));
         mongoOperations.remove(query,User.class);
     }
-    
+
 }
