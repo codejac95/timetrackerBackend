@@ -1,8 +1,10 @@
 package com.timetrackerBackend.timetrackerBackend.services;
 
+import java.util.List;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-
 import com.timetrackerBackend.timetrackerBackend.models.Task;
 
 @Service
@@ -14,38 +16,27 @@ public class TaskService {
         this.mongoOperations=mongoOperations;
     }
 
+    public List <Task> getAllTasks(){
+        return mongoOperations.findAll(Task.class);
+    }
+
+    public List <Task> getAllTasksForUser(String userId) {
+        Query query = Query.query(Criteria.where("userId").is(userId));
+        return mongoOperations.find(query, Task.class);
+    }
+
+    public List <Task> getTaskById(String id) {
+        Query query = Query.query(Criteria.where("id").is(id));
+        return mongoOperations.find(query, Task.class);
+    }
+        
     public Task createTask(Task task) {
         return mongoOperations.save(task);
     }
 
-    public Task startTask(String taskId) {
-        Task task = getTask(taskId);
-        if (task != null) {
-            if (task.getStartTime() == 0 && task.getDuration() != 0) {
-                long currentTime = System.currentTimeMillis();
-                long elapsedTimeSinceLastStop = currentTime - task.getLastStopTime();
-                task.setStartTime(currentTime - (task.getDuration() - elapsedTimeSinceLastStop));
-            } else {
-                task.setStartTime(System.currentTimeMillis());
-            }
-            mongoOperations.save(task);
-        }
-        return task;
-    }
-
-    public Task stopTask(String taskId) {
-        Task task = getTask(taskId);
-        if (task != null && task.getStartTime() != 0) {
-            long currentTime = System.currentTimeMillis();
-            task.setDuration(task.getDuration() + (currentTime - task.getStartTime()));
-            task.setStartTime(0);
-            task.setLastStopTime(currentTime); 
-            mongoOperations.save(task);
-        }
-        return task;
-    }
-
-    private Task getTask(String taskId) {
-        return mongoOperations.findById(taskId, Task.class);
+    public void deleteTask(String id) {
+        Query query = Query.query(Criteria.where("id").is(id));
+        mongoOperations.remove(query,Task.class);
     }
 }
+  

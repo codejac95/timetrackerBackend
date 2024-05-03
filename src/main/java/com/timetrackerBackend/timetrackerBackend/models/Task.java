@@ -7,17 +7,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Task {
     @Id
     private String id;
-    private String taskName;
-    private long startTime;
+    private String name;
     private long duration;
-    private long lastStopTime;
+    private String userId;
     
-    public Task(String id, String taskName, long startTime, long duration) {
-        this.id = id;
-        this.taskName = taskName;
-        this.startTime = startTime;
+    public Task(String name, long duration, String userId) {
+        this.name = name;
         this.duration = duration;
-        this.lastStopTime = lastStopTime;
+        this.userId = userId;
     }
 
     public String getId() {
@@ -28,20 +25,12 @@ public class Task {
         this.id = id;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getName() {
+        return name;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getDuration() {
@@ -52,13 +41,11 @@ public class Task {
         this.duration = duration;
     }
 
-    public long getLastStopTime() {
-        return lastStopTime;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setLastStopTime(long lastStopTime) {
-        this.lastStopTime = lastStopTime;
-    }
-
-    
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }  
 }

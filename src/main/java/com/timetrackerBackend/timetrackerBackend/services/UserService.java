@@ -25,14 +25,17 @@ public class UserService {
       return mongoOperations.find(query, User.class);
     }
 
-    public User createUser (User user) {
+    public User getUsername(String username) {
+        Query query = Query.query(Criteria.where("username").is(username));
+        return mongoOperations.findOne(query, User.class);
+    }
+
+    public void createUser(User user) {
         mongoOperations.save(user);
-        return user;
     }
 
     public void deleteUser(String id) {
         Query query = Query.query(Criteria.where("id").is(id));
         mongoOperations.remove(query,User.class);
     }
-
 }
