@@ -15,7 +15,7 @@ public class UserService {
     public UserService(MongoOperations mongoOperations) {
         this.mongoOperations=mongoOperations;
     }
-
+    
     public List <User> getAllUsers() {
         return mongoOperations.findAll(User.class);
     }

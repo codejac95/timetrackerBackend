@@ -20,7 +20,10 @@ public class TaskController {
     public TaskController (TaskService taskService){
          this.taskService=taskService;
     }
-   
+    @GetMapping
+    public String index() {
+        return "index";
+    }
     @GetMapping("/all-tasks")
     public List <Task> getAllTasks() {
         return taskService.getAllTasks();
