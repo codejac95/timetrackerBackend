@@ -9,17 +9,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.timetrackerBackend.timetrackerBackend.models.Task;
+import com.timetrackerBackend.timetrackerBackend.models.User;
 import com.timetrackerBackend.timetrackerBackend.services.TaskService;
+import com.timetrackerBackend.timetrackerBackend.services.UserService;
 
 
 @CrossOrigin(origins = "*")
 @RestController
 public class TaskController {
     private TaskService taskService;
+    private UserService userService; 
 
-    public TaskController (TaskService taskService){
-         this.taskService=taskService;
+    public TaskController(TaskService taskService, UserService userService) { 
+         this.taskService = taskService;
+         this.userService = userService;
     }
+    
     @GetMapping
     public String index() {
         return "index";
@@ -41,10 +46,12 @@ public class TaskController {
 
     @PostMapping("/task/userId/{userId}")
     public Task createTask(@PathVariable String userId, @RequestBody Task task) {
+        User user = userService.getUserById(userId).get(0);   
+        task.setUsername(user.getUsername());
         task.setUserId(userId);
         return taskService.createTask(task);
-    } 
-
+    }
+    
     @PostMapping("/task/start/{id}")
     public Task startTask(@PathVariable String id) {
        return taskService.startTaskTimer(id);
