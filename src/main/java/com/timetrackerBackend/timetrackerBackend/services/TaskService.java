@@ -25,18 +25,33 @@ public class TaskService {
         return mongoOperations.find(query, Task.class);
     }
 
-    public List <Task> getTaskById(String id) {
+    public Task getTaskById(String id) {
         Query query = Query.query(Criteria.where("id").is(id));
-        return mongoOperations.find(query, Task.class);
+        return mongoOperations.findOne(query, Task.class);
     }
         
     public Task createTask(Task task) {
         return mongoOperations.save(task);
     }
 
-    public void deleteTask(String id) {
-        Query query = Query.query(Criteria.where("id").is(id));
-        mongoOperations.remove(query,Task.class);
+    public Task startTaskTimer(String id) {
+        Task task = getTaskById(id);
+        task.startTimer();
+        return mongoOperations.save(task);
     }
+
+    public Task pauseTaskTimer(String id) {
+        Task task = getTaskById(id);
+        task.pauseTimer();
+        return mongoOperations.save(task);
+    }
+
+    public void deleteTask(String id) {
+        Query query = new Query(Criteria.where("id").is(id));
+        mongoOperations.remove(query, Task.class);
+    }
+    
 }
+
+
   

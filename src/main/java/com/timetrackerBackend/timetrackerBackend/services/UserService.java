@@ -38,4 +38,21 @@ public class UserService {
         Query query = Query.query(Criteria.where("id").is(id));
         mongoOperations.remove(query,User.class);
     }
+
+    public User login(String username, String password) {
+        Query query = Query.query(Criteria.where("username").is(username).and("password").is(password));
+        return mongoOperations.findOne(query, User.class);
+    }
+
+    public String registerUser(String username, String password) {
+        User existingUser = getUsername(username);
+        if (existingUser == null){
+            User user = new User(username, password, false);
+            createUser(user);
+            return "success";  
+        } else {
+            return "Användarnamnet är upptaget.";
+        }      
+    }
 }
+

@@ -34,29 +34,18 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @PostMapping("/register/{username}/{password}")
-    public ResponseEntity<String> registerUser(@PathVariable String username, @PathVariable String password) {
-        try {
-            User existingUser = userService.getUsername(username);
-            if (existingUser != null) {
-                return new ResponseEntity<>("Användarnamnet är redan upptaget", HttpStatus.BAD_REQUEST);
-            }
-            User user = new User(username, password, false);
-            userService.createUser(user);
-            return new ResponseEntity<>("Användaren har registrerats", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Registreringen misslyckades", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping("/register")
+    public String registerUser(@RequestBody User user) {
+        return userService.registerUser(user.getUsername(), user.getPassword());
     }
-    
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    public Object login(@RequestBody User user) {
         User existingUser = userService.getUsername(user.getUsername());
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
-            String sessionId = existingUser.getId();
-            return ResponseEntity.ok().body(Map.of("sessionId", sessionId));
+            return existingUser;
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Felaktiga inloggningsuppgifter"));
+            return null;
         }
     }
 
@@ -64,4 +53,6 @@ public class UserController {
     public void deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
     }
+
+    
 }

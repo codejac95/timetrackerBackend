@@ -8,13 +8,17 @@ public class Task {
     @Id
     private String id;
     private String name;
-    private long duration;
+    private long totalTime;
+    private long startTime; 
+    private boolean timerRunning;
     private String userId;
     
-    public Task(String name, long duration, String userId) {
+    public Task(String name, String userId) {
         this.name = name;
-        this.duration = duration;
         this.userId = userId;
+        this.totalTime = 0;
+        this.startTime = 0;
+        this.timerRunning = false;
     }
 
     public String getId() {
@@ -33,12 +37,12 @@ public class Task {
         this.name = name;
     }
 
-    public long getDuration() {
-        return duration;
+    public long getTotalTime() {
+        return totalTime;
     }
 
-    public void setDuration(long duration) {
-        this.duration = duration;
+    public void setTotalTime(long totalTime) {
+        this.totalTime = totalTime;
     }
 
     public String getUserId() {
@@ -48,4 +52,28 @@ public class Task {
     public void setUserId(String userId) {
         this.userId = userId;
     }  
+
+    public void startTimer() {
+        if (!timerRunning) {
+            startTime = System.currentTimeMillis()/1000;
+            timerRunning = true;
+        }
+    }
+
+    public void pauseTimer() {
+        if (timerRunning) {
+            long currentTime = System.currentTimeMillis()/1000;
+            totalTime += (currentTime - startTime);
+            startTime = 0; 
+            timerRunning = false; 
+        }
+    }
+
+    public boolean isTimerRunning() {
+        return timerRunning;
+    }
+
+    public void setTimerRunning(boolean timerRunning) {
+        this.timerRunning = timerRunning;
+    }
 }

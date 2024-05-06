@@ -30,7 +30,7 @@ public class TaskController {
     }
 
     @GetMapping("/task/taskId/{id}")
-    public List<Task> getTasksById(@PathVariable String id) {
+    public Task getTasksById(@PathVariable String id) {
         return taskService.getTaskById(id);
     }
 
@@ -45,10 +45,19 @@ public class TaskController {
         return taskService.createTask(task);
     } 
 
+    @PostMapping("/task/start/{id}")
+    public Task startTask(@PathVariable String id) {
+       return taskService.startTaskTimer(id);
+    }
+    
+    @PostMapping("/task/pause/{id}")
+    public Task pauseTask(@PathVariable String id) {
+       return taskService.pauseTaskTimer(id);
+    }
+    
     @DeleteMapping("/task/taskId/{id}")
     public void deleteTask(@PathVariable String id) {
-        taskService.deleteTask(id);
-
+     taskService.deleteTask(id);
     } 
 }
 
