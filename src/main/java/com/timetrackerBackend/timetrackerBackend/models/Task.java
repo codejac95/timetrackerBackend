@@ -8,14 +8,17 @@ public class Task {
     @Id
     private String id;
     private String name;
+    private String username;
     private long totalTime;
     private long startTime; 
     private boolean timerRunning;
     private String userId;
     
-    public Task(String name, String userId) {
+    
+    public Task(String name, String userId, String username) {
         this.name = name;
         this.userId = userId;
+        this.username = username;
         this.totalTime = 0;
         this.startTime = 0;
         this.timerRunning = false;
@@ -35,6 +38,14 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public long getTotalTime() {
