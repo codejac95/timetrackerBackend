@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.timetrackerBackend.timetrackerBackend.models.Task;
 import com.timetrackerBackend.timetrackerBackend.models.User;
+import com.timetrackerBackend.timetrackerBackend.services.TaskService;
 import com.timetrackerBackend.timetrackerBackend.services.UserService;
 
 @CrossOrigin(origins = "*")
@@ -16,9 +19,11 @@ import com.timetrackerBackend.timetrackerBackend.services.UserService;
 public class UserController {
     
     private UserService userService;
+    private TaskService taskService;
 
-    public UserController (UserService userService){
+    public UserController (UserService userService, TaskService taskService){
          this.userService=userService;
+         this.taskService=taskService;
     }
 
     @GetMapping("/user")
@@ -46,10 +51,18 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable String id) {
+    // @DeleteMapping("/user/{id}")
+    // public void deleteUser(@PathVariable String id) {
+    //     userService.deleteUser(id);
+    // }
+
+      @DeleteMapping("/user/{id}")
+        public void deleteUserAndTasks(@PathVariable String id) {
+        List<Task> userTasks = taskService.getAllTasksForUser(id);
+        for(Task task:userTasks){
+            taskService.deleteTask(task.getId());
+        }
         userService.deleteUser(id);
     }
-
     
 }
