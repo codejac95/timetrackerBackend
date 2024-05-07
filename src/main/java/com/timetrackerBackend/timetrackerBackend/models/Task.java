@@ -87,4 +87,12 @@ public class Task {
     public void setTimerRunning(boolean timerRunning) {
         this.timerRunning = timerRunning;
     }
+    
+    public void updateTimer() {
+        if (timerRunning) {
+            long currentTime = System.currentTimeMillis() / 1000;
+            totalTime = totalTime + (currentTime - startTime);
+            startTime = currentTime;
+        }
+    }
 }
