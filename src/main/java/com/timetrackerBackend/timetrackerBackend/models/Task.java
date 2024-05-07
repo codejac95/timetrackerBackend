@@ -66,14 +66,14 @@ public class Task {
 
     public void startTimer() {
         if (!timerRunning) {
-            startTime = System.currentTimeMillis()/1000;
+            startTime = System.currentTimeMillis()/1000*60;
             timerRunning = true;
         }
     }
 
     public void pauseTimer() {
         if (timerRunning) {
-            long currentTime = System.currentTimeMillis()/1000;
+            long currentTime = System.currentTimeMillis()/1000*60;
             totalTime += (currentTime - startTime);
             startTime = 0; 
             timerRunning = false; 
@@ -87,10 +87,10 @@ public class Task {
     public void setTimerRunning(boolean timerRunning) {
         this.timerRunning = timerRunning;
     }
-    
+
     public void updateTimer() {
         if (timerRunning) {
-            long currentTime = System.currentTimeMillis() / 1000;
+            long currentTime = System.currentTimeMillis() / 1000*60;
             totalTime = totalTime + (currentTime - startTime);
             startTime = currentTime;
         }
