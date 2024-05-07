@@ -51,18 +51,12 @@ public class UserController {
         }
     }
 
-    // @DeleteMapping("/user/{id}")
-    // public void deleteUser(@PathVariable String id) {
-    //     userService.deleteUser(id);
-    // }
-
-      @DeleteMapping("/user/{id}")
-        public void deleteUserAndTasks(@PathVariable String id) {
+    @DeleteMapping("/user/{id}")
+    public void deleteUserAndTasks(@PathVariable String id) {
         List<Task> userTasks = taskService.getAllTasksForUser(id);
         for(Task task:userTasks){
             taskService.deleteTask(task.getId());
         }
         userService.deleteUser(id);
-    }
-    
+    } 
 }
