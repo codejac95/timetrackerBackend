@@ -87,11 +87,11 @@ public class Task {
         this.timerRunning = timerRunning;
     }
 
-    // public void updateTimer() {
-    //     if (timerRunning) {
-    //         long currentTime = System.currentTimeMillis() / (1000*60);
-    //         totalTime = totalTime + (currentTime - startTime);
-    //         startTime = currentTime;
-    //     }
-    // }
+    public void updateTimer() {
+        if (timerRunning) {
+            long currentTime = System.currentTimeMillis() / (1000*60);
+            totalTime = totalTime + (currentTime - startTime);
+            startTime = currentTime;
+        }
+    }
 }
