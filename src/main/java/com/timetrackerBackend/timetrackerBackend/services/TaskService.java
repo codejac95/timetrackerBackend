@@ -57,19 +57,19 @@ public class TaskService {
         mongoOperations.remove(query, Task.class);
     }
 
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-    @PostConstruct
-    public void startTimerUpdateTask() {
-        executorService.scheduleAtFixedRate(this::updateTimers, 0, 1, TimeUnit.MINUTES);
-    }
+    // private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+    // @PostConstruct
+    // public void startTimerUpdateTask() {
+    //     executorService.scheduleAtFixedRate(this::updateTimers, 0, 1, TimeUnit.MINUTES);
+    // }
 
-    private void updateTimers() {
-        List<Task> tasks = getAllTasks();
-        for (Task task : tasks) {
-            task.updateTimer();
-            mongoOperations.save(task);
-        }
-    }
+    // private void updateTimers() {
+    //     List<Task> tasks = getAllTasks();
+    //     for (Task task : tasks) {
+    //         task.updateTimer();
+    //         mongoOperations.save(task);
+    //     }
+    // }
     
 }
 
