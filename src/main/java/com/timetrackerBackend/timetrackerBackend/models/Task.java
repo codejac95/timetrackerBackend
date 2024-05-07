@@ -14,7 +14,6 @@ public class Task {
     private boolean timerRunning;
     private String userId;
     
-    
     public Task(String name, String userId, String username) {
         this.name = name;
         this.userId = userId;
@@ -66,14 +65,14 @@ public class Task {
 
     public void startTimer() {
         if (!timerRunning) {
-            startTime = System.currentTimeMillis()/1000*60;
+            startTime = System.currentTimeMillis() / (1000*60);
             timerRunning = true;
         }
     }
 
     public void pauseTimer() {
         if (timerRunning) {
-            long currentTime = System.currentTimeMillis()/1000*60;
+            long currentTime = System.currentTimeMillis()/ (1000*60);
             totalTime += (currentTime - startTime);
             startTime = 0; 
             timerRunning = false; 
@@ -90,7 +89,7 @@ public class Task {
 
     public void updateTimer() {
         if (timerRunning) {
-            long currentTime = System.currentTimeMillis() / 1000*60;
+            long currentTime = System.currentTimeMillis() / (1000*60);
             totalTime = totalTime + (currentTime - startTime);
             startTime = currentTime;
         }
