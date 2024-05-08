@@ -60,7 +60,7 @@ public class TaskService {
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
     @PostConstruct
     public void startTimerUpdateTask() {
-        executorService.scheduleAtFixedRate(this::updateTimers, 0, 1, TimeUnit.MINUTES);
+        executorService.scheduleAtFixedRate(this::updateTimers, 0, 1, TimeUnit.SECONDS);
     }
 
     private void updateTimers() {
