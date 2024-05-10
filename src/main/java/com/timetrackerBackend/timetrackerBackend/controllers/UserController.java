@@ -51,6 +51,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/logout/{userId}")
+    public void logoutUser(@PathVariable String userId) {
+        List<Task> userTasks = taskService.getAllTasksForUser(userId);
+        for(Task task : userTasks){
+            if(task.isTimerRunning()) {
+                task.pauseTimer();
+                taskService.updateTask(task); 
+            } 
+        }
+    }
+
     @DeleteMapping("/user/{id}")
     public void deleteUserAndTasks(@PathVariable String id) {
         List<Task> userTasks = taskService.getAllTasksForUser(id);

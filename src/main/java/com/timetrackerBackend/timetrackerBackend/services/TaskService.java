@@ -40,6 +40,10 @@ public class TaskService {
         return mongoOperations.save(task);
     }
 
+    public Task updateTask(Task task) {
+        return mongoOperations.save(task);
+}
+
     public Task startTaskTimer(String id) {
         Task task = getTaskById(id);
         task.startTimer();
